@@ -1029,6 +1029,7 @@
   {
     "type": "file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -2848,6 +2849,10 @@
           "named": true
         },
         {
+          "type": "description",
+          "named": true
+        },
+        {
           "type": "key",
           "named": true
         },
@@ -2960,6 +2965,10 @@
       "types": [
         {
           "type": "command",
+          "named": true
+        },
+        {
+          "type": "command_line_option",
           "named": true
         },
         {
@@ -4922,7 +4931,7 @@
           "named": true
         },
         {
-          "type": "option",
+          "type": "env_var",
           "named": true
         },
         {
@@ -6735,7 +6744,7 @@
           "named": true
         },
         {
-          "type": "option",
+          "type": "env_var",
           "named": true
         }
       ]
@@ -6911,10 +6920,6 @@
     "named": false
   },
   {
-    "type": "-noregex",
-    "named": false
-  },
-  {
     "type": "/",
     "named": false
   },
@@ -7029,6 +7034,10 @@
   {
     "type": "editor",
     "named": false
+  },
+  {
+    "type": "env_var",
+    "named": true
   },
   {
     "type": "error",

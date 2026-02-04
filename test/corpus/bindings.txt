@@ -1,0 +1,248 @@
+================================================================================
+bind single map
+================================================================================
+
+bind index j next-entry
+bind pager k previous-entry
+
+---
+
+(file
+  (bind_directive
+    (command)
+    (map)
+    (key)
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key)
+    (function)))
+
+================================================================================
+bind multiple maps
+================================================================================
+
+bind index,pager j next-entry
+bind pager,index,browser k previous-entry
+
+---
+
+(file
+  (bind_directive
+    (command)
+    (map)
+    (map)
+    (key)
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (map)
+    (map)
+    (key)
+    (function)))
+
+================================================================================
+bind with special keys
+================================================================================
+
+bind index <Tab> next-unread
+bind pager <Enter> view-attachments
+bind browser <F1> help
+bind index <Home> first-entry
+bind index <End> last-entry
+bind index <PageUp> previous-page
+bind index <PageDown> next-page
+
+---
+
+(file
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (key_name))
+    (function)))
+
+================================================================================
+bind with control characters
+================================================================================
+
+bind index \ch sidebar-toggle-visible
+bind pager \cn next-line
+bind index \cp previous-line
+
+---
+
+(file
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (escape))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (escape))
+    (function))
+  (bind_directive
+    (command)
+    (map)
+    (key
+      (escape))
+    (function)))
+
+================================================================================
+bind with combined special and control keys
+================================================================================
+
+bind pager,index \ch<BackSpace> sidebar-toggle-visible
+
+---
+
+(file
+  (bind_directive
+    (command)
+    (map)
+    (map)
+    (key
+      (escape)
+      (key_name))
+    (function)))
+
+================================================================================
+unbind single map
+================================================================================
+
+unbind index j
+unbind pager <Tab>
+
+---
+
+(file
+  (unbind_directive
+    (command)
+    (map)
+    (key))
+  (unbind_directive
+    (command)
+    (map)
+    (key
+      (key_name))))
+
+================================================================================
+unbind all maps
+================================================================================
+
+unbind * j
+
+---
+
+(file
+  (unbind_directive
+    (command)
+    (key)))
+
+================================================================================
+macro single map
+================================================================================
+
+macro index G "!fetchmail\n" "fetch mail"
+macro pager \cb "|urlview\n" "open URLs in browser"
+
+---
+
+(file
+  (macro_directive
+    (command)
+    (map)
+    (key)
+    (sequence
+      (shell))
+    (description
+      (shell)))
+  (macro_directive
+    (command)
+    (map)
+    (key
+      (escape))
+    (sequence
+      (shell))
+    (description
+      (shell))))
+
+================================================================================
+macro multiple maps
+================================================================================
+
+macro index,pager A "<save-message>=Archive\n" "archive message"
+
+---
+
+(file
+  (macro_directive
+    (command)
+    (map)
+    (map)
+    (key)
+    (sequence
+      (shell))
+    (description
+      (shell))))
+
+================================================================================
+unmacro
+================================================================================
+
+unmacro index G
+unmacro * A
+
+---
+
+(file
+  (unmacro_directive
+    (command)
+    (map)
+    (key))
+  (unmacro_directive
+    (command)
+    (key)))

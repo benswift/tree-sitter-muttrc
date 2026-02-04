@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "muttrc",
   "rules": {
     "file": {
@@ -520,7 +521,7 @@
                 "type": "ALIAS",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[a-zA-Z-]+"
+                  "value": "[a-zA-Z0-9-]+"
                 },
                 "named": true,
                 "value": "key_name"
@@ -1389,7 +1390,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "#\\d{6}"
+          "value": "#[0-9a-fA-F]{6}"
         },
         {
           "type": "PATTERN",
@@ -2099,8 +2100,16 @@
           "value": "command"
         },
         {
-          "type": "SYMBOL",
-          "name": "_group"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_group"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
@@ -2121,8 +2130,16 @@
           "value": "command"
         },
         {
-          "type": "SYMBOL",
-          "name": "_group"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_group"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -2152,8 +2169,16 @@
           "value": "command"
         },
         {
-          "type": "SYMBOL",
-          "name": "_group"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_group"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
@@ -2174,8 +2199,16 @@
           "value": "command"
         },
         {
-          "type": "SYMBOL",
-          "name": "_group"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_group"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -2219,6 +2252,10 @@
         {
           "type": "SYMBOL",
           "name": "sequence"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "description"
         }
       ]
     },
@@ -2531,8 +2568,13 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "-noregex"
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "-noregex"
+              },
+              "named": true,
+              "value": "command_line_option"
             },
             {
               "type": "BLANK"
@@ -3519,6 +3561,10 @@
         }
       ]
     },
+    "env_var": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z_][a-zA-Z_\\d]*"
+    },
     "setenv_directive": {
       "type": "SEQ",
       "members": [
@@ -3543,7 +3589,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "option"
+                  "name": "env_var"
                 }
               ]
             },
@@ -3552,7 +3598,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "option"
+                  "name": "env_var"
                 },
                 {
                   "type": "ALIAS",
@@ -3583,7 +3629,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "option"
+          "name": "env_var"
         }
       ]
     },
@@ -3988,5 +4034,6 @@
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

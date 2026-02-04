@@ -109,7 +109,7 @@ module.exports = grammar({
     key: ($) =>
       repeat1(
         choice(
-          seq("<", alias(/[a-zA-Z-]+/, $.key_name), ">"),
+          seq("<", alias(/[a-zA-Z0-9-]+/, $.key_name), ">"),
           /[^\n\\ ]/,
           alias(/\\./, $.escape)
         )
@@ -242,7 +242,7 @@ module.exports = grammar({
         "magenta",
         "cyan",
         "white",
-        /#\d{6}/,
+        /#[0-9a-fA-F]{6}/,
         /color\d+/
       ),
     attribute: (_) =>
@@ -325,15 +325,17 @@ module.exports = grammar({
     ignore_directive: ($) => command($, "ignore", $._strings),
     unignore_directive: ($) => command($, "unignore", choice("*", $._strings)),
 
-    lists_directive: ($) => command($, "lists", $._group, $._regexes),
+    lists_directive: ($) => command($, "lists", optional($._group), $._regexes),
     unlists_directive: ($) =>
-      command($, "unlists", $._group, choice("*", $._regexes)),
-    subscribe_directive: ($) => command($, "subscribe", $._group, $._regexes),
+      command($, "unlists", optional($._group), choice("*", $._regexes)),
+    subscribe_directive: ($) =>
+      command($, "subscribe", optional($._group), $._regexes),
     unsubscribe_directive: ($) =>
-      command($, "unsubscribe", $._group, choice("*", $._regexes)),
+      command($, "unsubscribe", optional($._group), choice("*", $._regexes)),
 
     sequence: ($) => $._string,
-    macro_directive: ($) => command($, "macro", $._maps, $.key, $.sequence),
+    macro_directive: ($) =>
+      command($, "macro", $._maps, $.key, $.sequence, $.description),
     unmacro_directive: ($) =>
       command($, "unmacro", choice("*", $._maps), $.key),
 
@@ -359,7 +361,13 @@ module.exports = grammar({
     cd_directive: ($) => command($, "cd", $.directory),
 
     mbox_hook_directive: ($) =>
-      command($, "mbox-hook", optional("-noregex"), $._regex, $.mailbox),
+      command(
+        $,
+        "mbox-hook",
+        optional(alias("-noregex", $.command_line_option)),
+        $._regex,
+        $.mailbox
+      ),
     message_hook_directive: ($) =>
       command($, "message-hook", $.pattern, $._command),
 
@@ -446,13 +454,14 @@ module.exports = grammar({
     reset_directive: ($) => command($, "reset", $._options),
     toggle_directive: ($) => command($, "toggle", $._options),
 
+    env_var: (_) => /[a-zA-Z_][a-zA-Z_\d]*/,
     setenv_directive: ($) =>
       command(
         $,
         "setenv",
-        choice(seq("?", $.option), seq($.option, alias(/\S+/, $.value)))
+        choice(seq("?", $.env_var), seq($.env_var, alias(/\S+/, $.value)))
       ),
-    unsetenv_directive: ($) => command($, "unsetenv", $.option),
+    unsetenv_directive: ($) => command($, "unsetenv", $.env_var),
     sidebar_pin_directive: ($) => command($, "sidebar_pin", $._mailboxes),
     sidebar_unpin_directive: ($) =>
       command($, "sidebar_unpin", choice("*", $._mailboxes)),

@@ -1,0 +1,284 @@
+================================================================================
+set with boolean (quadoption)
+================================================================================
+
+set allow_ansi=yes
+set allow_ansi = no
+set allow_ansi=ask-yes
+set allow_ansi=ask-no
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (quadoption))
+  (set_directive
+    (command)
+    (option)
+    (quadoption))
+  (set_directive
+    (command)
+    (option)
+    (quadoption))
+  (set_directive
+    (command)
+    (option)
+    (quadoption)))
+
+================================================================================
+set with integer
+================================================================================
+
+set sleep_time=0
+set sleep_time = 5
+set timeout=-1
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (int))
+  (set_directive
+    (command)
+    (option)
+    (int))
+  (set_directive
+    (command)
+    (option)
+    (int)))
+
+================================================================================
+set with string values
+================================================================================
+
+set realname="Ben Swift"
+set realname='Ben Swift'
+set ispell=aspell
+set query_command='mutt_ldap_query.pl %s'
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (shell))
+  (set_directive
+    (command)
+    (option)
+    (string))
+  (set_directive
+    (command)
+    (option)
+    (shell))
+  (set_directive
+    (command)
+    (option)
+    (string)))
+
+================================================================================
+set with shell variables
+================================================================================
+
+set realname=$DEBFULLNAME
+set realname = $USER
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (shell))
+  (set_directive
+    (command)
+    (option)
+    (shell)))
+
+================================================================================
+set with backtick command substitution
+================================================================================
+
+set imap_pass=`pass show email/password`
+set my_sig = `echo "Best Regards"`
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (shell))
+  (set_directive
+    (command)
+    (option)
+    (shell)))
+
+================================================================================
+set with operators (+=, -=)
+================================================================================
+
+set mailcap_path+=~/.mutt/mailcap
+set mailcap_path -= /etc/mailcap
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (shell))
+  (set_directive
+    (command)
+    (option)
+    (shell)))
+
+================================================================================
+set with prefixes (&, ?)
+================================================================================
+
+set &realname
+set ?allow_ansi
+set &realname ?allow_ansi
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option))
+  (set_directive
+    (command)
+    (option))
+  (set_directive
+    (command)
+    (option)
+    (option)))
+
+================================================================================
+set with no prefix (boolean negation)
+================================================================================
+
+set noallow_ansi
+set nostrstrict
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option))
+  (set_directive
+    (command)
+    (option)))
+
+================================================================================
+set multiple options
+================================================================================
+
+set realname="Ben" sleep_time=0
+set &realname ?allow_ansi nostrict
+
+---
+
+(file
+  (set_directive
+    (command)
+    (option)
+    (shell)
+    (option)
+    (int))
+  (set_directive
+    (command)
+    (option)
+    (option)
+    (option)))
+
+================================================================================
+unset
+================================================================================
+
+unset allow_ansi
+unset allow_ansi strstrict
+
+---
+
+(file
+  (unset_directive
+    (command)
+    (option))
+  (unset_directive
+    (command)
+    (option)
+    (option)))
+
+================================================================================
+reset
+================================================================================
+
+reset allow_ansi
+reset allow_ansi strstrict
+
+---
+
+(file
+  (reset_directive
+    (command)
+    (option))
+  (reset_directive
+    (command)
+    (option)
+    (option)))
+
+================================================================================
+toggle
+================================================================================
+
+toggle allow_ansi
+toggle allow_ansi strstrict
+
+---
+
+(file
+  (toggle_directive
+    (command)
+    (option))
+  (toggle_directive
+    (command)
+    (option)
+    (option)))
+
+================================================================================
+setenv
+================================================================================
+
+setenv EDITOR vim
+setenv ?EDITOR
+
+---
+
+(file
+  (setenv_directive
+    (command)
+    (env_var)
+    (value))
+  (setenv_directive
+    (command)
+    (env_var)))
+
+================================================================================
+unsetenv
+================================================================================
+
+unsetenv EDITOR
+
+---
+
+(file
+  (unsetenv_directive
+    (command)
+    (env_var)))
